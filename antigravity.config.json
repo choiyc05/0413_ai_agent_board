@@ -1,0 +1,33 @@
+{
+    "models": {
+        "local-ollama": {
+            "provider": "openai-compatible",
+            "baseUrl": "http://localhost:11434/v1",
+            "model": "gemma4:e4b",
+            "apiKey": "ollama",
+            "maxTokens": 4096,
+            "temperature": 0.1,
+            "contextWindow": 128000
+        },
+        "gemini-pro": {
+            "provider": "google-antigravity",
+            "model": "antigravity-gemini-3.1-pro",
+            "variant": "high",
+            "maxTokens": 8192,
+            "temperature": 0.1
+        }
+    },
+    "defaultModel": "local-ollama",
+    "fallback": {
+        "enabled": true,
+        "models": [
+            "gemini-pro"
+        ],
+        "trigger": "quota_exhausted",
+        "strategy": "priority_rotation"
+    },
+    "usage_optimizations": {
+        "context_caching": true,
+        "routing_logic": "cost_efficient"
+    }
+}
