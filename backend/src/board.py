@@ -9,7 +9,7 @@ def get_board():
     """DB에서 삭제되지 않은 게시글 목록을 최신순으로 조회"""
     try:
         # delYn이 0인 데이터만, no 역순으로 가져옵니다.
-        sql = "SELECT no, title, name, content FROM board WHERE delYn = 0 ORDER BY no DESC"
+        sql = "SELECT no, title, name, content FROM list WHERE delYn = 0 ORDER BY no DESC"
         posts = findAll(sql)
         return {"status": True, "data": posts}
     except Exception as e:
@@ -20,7 +20,7 @@ def get_board():
 def read_post(post_no: int):
     """DB에서 게시글 조회"""
     try:
-        sql = "SELECT no, title, name, content FROM board WHERE no = ? AND delYn = 0"
+        sql = "SELECT no, title, name, content FROM list WHERE no = ? AND delYn = 0"
         post = findOne(sql, (post_no,))
         if not post:
             return {"status": False, "message": "존재하지 않거나 삭제된 게시글입니다."}

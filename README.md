@@ -33,6 +33,10 @@ backend
     ├── board.py             # 게시판 도메인 관련 로직
     ├── core.py              # LangGraph 에이전트 및 LLM 초기화 (lifespan)
     └── mariadb_crud.py      # MariaDB 연결
+
+frontend
+├── 
+
 ```
 
 ```bash

@@ -38,7 +38,7 @@ def create_board_post(title: str, name: str, content: str):
     - name: 작성자 이름 (없을 경우 '익명'으로 설정)
     - content: 생성되거나 추출된 본문 내용
     """
-    sql = "INSERT INTO board.list (title, name, content, delYn) VALUES (?, ?, ?, 0)"
+    sql = "INSERT INTO list (title, name, content, delYn) VALUES (?, ?, ?, 0)"
     params = (title, name, content)
     if save(sql, params):
         return {"status": True, "message": "성공적으로 게시글을 작성했습니다."}
@@ -65,7 +65,7 @@ def update_board_post(post_no: int, title: str = None, content: str = None):
         return "수정할 내용이 제공되지 않았습니다."
     
     params.append(post_no)
-    sql = f"UPDATE board.list SET {', '.join(fields)} WHERE no = ?"
+    sql = f"UPDATE list SET {', '.join(fields)} WHERE no = ?"
     
     if save(sql, tuple(params)):
         return {"status": True, "message": "게시글이 수정되었습니다."}
@@ -76,7 +76,7 @@ def delete_board_post(post_no: int):
     """
     게시글 No를 받아 해당 게시글을 논리적으로 삭제(delYn=1)합니다.
     """
-    sql = "UPDATE board.list SET delYn = 1 WHERE no = ?"
+    sql = "UPDATE list SET delYn = 1 WHERE no = ?"
     params = (post_no,)
     
     if save(sql, params):

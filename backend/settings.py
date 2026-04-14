@@ -1,9 +1,9 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-  ollama_base_url: str = "http://localhost:11434"
+  ollama_base_url: str = "http://host.docker.internal:11434"
   ollama_model_name: str = "gemma4:e4b"
-  db_host: str = "192.168.0.111"
+  db_host: str = "board-db"
   db_port: int = 3306
   db_database: str = "board"
   db_user: str = "root"

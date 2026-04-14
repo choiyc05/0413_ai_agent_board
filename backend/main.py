@@ -8,7 +8,7 @@ app = FastAPI(title="AI Agent Board", lifespan=lifespan)
 for router in routers:
     app.include_router(router.router)
 
-ORIGINS = ["http://localhost", "http://localhost:5173", "http://192.168.0.111:5173",]
+ORIGINS = ["http://localhost", "http://localhost:5173", "http://192.168.0.111:5173", "http://aiedu.tplinkdns.com:6110", "http://aiedu.tplinkdns.com"]
 
 app.add_middleware(
     CORSMiddleware,
