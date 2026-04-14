@@ -1,6 +1,6 @@
 {
     "models": {
-        "local-ollama": {
+        "gemma4": {
             "provider": "openai-compatible",
             "baseUrl": "http://localhost:11434/v1",
             "model": "gemma4:e4b",
@@ -17,7 +17,7 @@
             "temperature": 0.1
         }
     },
-    "defaultModel": "local-ollama",
+    "defaultModel": "gemma4",
     "fallback": {
         "enabled": true,
         "models": [
