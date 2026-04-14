@@ -24,6 +24,8 @@ const BoardDetail = () => {
       }
     };
     fetchPost();
+    window.addEventListener('refreshBoard', fetchPost);
+    return () => window.removeEventListener('refreshBoard', fetchPost);
   }, [id]);
 
   if (error) {
