@@ -22,6 +22,8 @@ const BoardList = () => {
 
   useEffect(() => {
     fetchPosts();
+    window.addEventListener('refreshBoard', fetchPosts);
+    return () => window.removeEventListener('refreshBoard', fetchPosts);
   }, []);
 
   return (

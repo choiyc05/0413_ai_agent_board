@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Terminal } from 'lucide-react';
+import { Send, Terminal, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '@/api';
 import './ChatInterface.css';
 
@@ -9,6 +9,7 @@ const ChatInterface = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -37,6 +38,7 @@ const ChatInterface = () => {
           type: 'ai',
           text: response.data.answer
         }]);
+        window.dispatchEvent(new Event('refreshBoard'));
       } else {
         throw new Error("Failed to get a proper response from AI");
       }
@@ -52,12 +54,13 @@ const ChatInterface = () => {
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-header">
-        <Terminal size={18} color="var(--text-secondary)" />
-        <div className="chat-title">
-          Agent Terminal <span className="status-dot"></span>
+    <div className={`chat-container ${isMinimized ? 'minimized' : ''}`}>
+      <div className="chat-header" onClick={() => setIsMinimized(!isMinimized)} style={{ cursor: 'pointer' }}>
+        {loading ? <Loader2 size={18} className="spinner" /> : <Terminal size={18} color="var(--text-secondary)" />}
+        <div className="chat-title" style={{ flex: 1 }}>
+          {loading ? 'Processing...' : 'Agent Terminal'} <span className={`status-dot ${loading ? 'pulsing' : ''}`}></span>
         </div>
+        {isMinimized ? <ChevronUp size={20} color="var(--text-secondary)" /> : <ChevronDown size={20} color="var(--text-secondary)" />}
       </div>
 
       <div className="chat-messages">
