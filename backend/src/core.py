@@ -34,9 +34,9 @@ class PostDelete(BaseModel):
 def create_board_post(title: str, name: str, content: str):
     """
     사용자의 요청을 바탕으로 새로운 게시글을 데이터베이스에 저장합니다.
-    - title: 추출된 제목
+    - title: 추출된 제목 (없을 경우 `content`의 내용 바탕으로 임의로 설정)
     - name: 작성자 이름 (없을 경우 '익명'으로 설정)
-    - content: 생성되거나 추출된 본문 내용
+    - content: 생성되거나 추출된 본문 내용 (**필수**)
     """
     sql = "INSERT INTO list (title, name, content, delYn) VALUES (?, ?, ?, 0)"
     params = (title, name, content)
@@ -114,7 +114,7 @@ async def lifespan(app: FastAPI):
 
     # 1. 메모리 저장소 생성
     memory = MemorySaver()
-    app.state.agent_executor = create_react_agent(llm, tools, prompt=system_message,checkpointer=memory)
+    app.state.agent_executor = create_react_agent(llm, tools, prompt=system_message, checkpointer=memory)
 
     yield
   except Exception as e:
