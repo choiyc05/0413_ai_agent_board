@@ -17,8 +17,10 @@ const ChatInterface = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (!isMinimized) {
+      scrollToBottom();
+    }
+  }, [messages, isMinimized]);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -38,6 +40,8 @@ const ChatInterface = () => {
           type: 'ai',
           text: response.data.answer
         }]);
+        // 응답이 도착하면 자동으로 창을 펼침
+        setIsMinimized(false);
         window.dispatchEvent(new Event('refreshBoard'));
       } else {
         throw new Error("Failed to get a proper response from AI");
@@ -48,6 +52,7 @@ const ChatInterface = () => {
         type: 'ai',
         text: '죄송합니다. 오류가 발생했습니다. 연결을 확인해주세요.'
       }]);
+      setIsMinimized(false);
     } finally {
       setLoading(false);
     }
