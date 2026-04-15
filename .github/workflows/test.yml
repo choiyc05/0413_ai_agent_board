@@ -9,28 +9,14 @@ jobs:
     build:
         runs-on: self-hosted
         steps:
-        # - uses: actions/checkout@v2
-            # - name: Checkout PowerShell
-            #   run: $PSVersionTable
             - name: Checkout repository 
               uses: actions/checkout@v4
-
-            # - name: Check Node version
-            #   run: node -v
 
             - name: npm install and build
               working-directory: ./frontend
               run: |
                 npm i
                 npm run build
-
-            # - name: npm run
-            #   working-directory: ./frontend
-            #   run: npm run build
-
-            # - name: nginx
-            # #   working-directory: ./frontend/dist
-            #   run: docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html --name frontend nginx:alpine
 
             - name: deploy with docker compose
               run: |
