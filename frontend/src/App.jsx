@@ -7,13 +7,13 @@ import NotFound from '@components/Layout/NotFound';
 
 function App() {
   return (
-    <MainLayout bottomContent={<ChatInterface />}>
-      <Routes>
+    <Routes>
+      <MainLayout bottomContent={<ChatInterface />}>
         <Route path="/" element={<BoardList />} />
         <Route path="/post/:id" element={<BoardDetail />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </MainLayout>
+      </MainLayout>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
