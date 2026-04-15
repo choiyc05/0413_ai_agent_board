@@ -42,9 +42,9 @@ services:
     networks:
       - my_network
 
-frontend:
+  frontend:
     build:
-      context: ./frontend
+      context: ./frontend 
       dockerfile: Dockerfile
     container_name: frontend
     restart: always
