@@ -10,8 +10,6 @@ services:
       - MARIADB_DATABASE=board
       - TZ=Asia/Seoul
       - LC_ALL:en_US.UTF-8
-    ports:
-      - 3306:3306
     volumes:
       - board_db_data:/var/lib/mysql
       - ./db/initdb.d:/docker-entrypoint-initdb.d
@@ -23,8 +21,6 @@ services:
       context: ./backend
     container_name: backend
     restart: always
-    ports:
-      - 8000:8000
     depends_on:
       - board-db
     volumes:
