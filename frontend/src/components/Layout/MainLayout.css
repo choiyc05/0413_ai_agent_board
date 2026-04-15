@@ -5,13 +5,14 @@
   overflow: hidden;
   position: relative;
   background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.05), transparent 40%),
-              radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.03), transparent 40%);
+    radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.03), transparent 40%);
 }
 
 .top-section {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 240px; /* Space for the chat interface */
+  padding-bottom: 380px;
+  /* Space for the chat interface */
   position: relative;
 }
 
@@ -20,8 +21,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 380px; /* Base height of chat interface */
-  pointer-events: none; /* Let clicks pass through empty space */
+  height: 380px;
+  /* Base height of chat interface */
+  pointer-events: none;
+  /* Let clicks pass through empty space */
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -29,6 +32,7 @@
   z-index: 10;
 }
 
-.bottom-section > * {
-  pointer-events: auto; /* Enable clicks on the children */
+.bottom-section>* {
+  pointer-events: auto;
+  /* Enable clicks on the children */
 }
