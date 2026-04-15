@@ -12,13 +12,7 @@ jobs:
             - name: Checkout repository 
               uses: actions/checkout@v4
 
-            - name: npm install and build
-              working-directory: ./frontend
-              run: |
-                npm i
-                npm run build
-
             - name: deploy with docker compose
               run: |
                 docker compose down --remove-orphans
-                docker compose up -d
+                docker compose up -d --build

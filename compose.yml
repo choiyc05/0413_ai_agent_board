@@ -42,14 +42,16 @@ services:
     networks:
       - my_network
 
-  frontend:
-    image: nginx:alpine
+frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: frontend
     restart: always
     ports:
       - 80:80
     volumes:
-      - ./frontend/dist:/usr/share/nginx/html
+      # - ./frontend/dist:/usr/share/nginx/html # 빌드 파일 볼륨은 삭제하고, 설정 파일만 마운트합니다.
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
