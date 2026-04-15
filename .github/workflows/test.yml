@@ -25,4 +25,7 @@ jobs:
             - name: npm run
               working-directory: ./frontend
               run: npm run build
-          
+
+            - name: nginx
+            #   working-directory: ./frontend/dist
+              run: docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html --name frontend nginx:alpine
