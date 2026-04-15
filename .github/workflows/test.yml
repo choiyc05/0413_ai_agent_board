@@ -15,6 +15,10 @@ jobs:
             - name: Checkout repository 
               uses: actions/checkout@v4
 
-            - name: Check Node version
-              run: node -v
+            # - name: Check Node version
+            #   run: node -v
+
+            - name: npm install
+              working-directory: ./frontend
+              run: npm i
           
