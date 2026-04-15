@@ -1,0 +1,14 @@
+name : test
+    
+on:
+    push:
+        branches: [ actions_1 ]
+    
+jobs:
+    build:
+        runs-on: self-hosted
+        steps:
+        # - uses: actions/checkout@v
+            - name: Checkout PowerShell
+              run: $PSVersionTable
+          
