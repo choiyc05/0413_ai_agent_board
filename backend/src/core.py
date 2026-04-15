@@ -18,9 +18,9 @@ class Query(BaseModel):
   input: str
 
 class PostCreate(BaseModel):
-    title: str = Field(description="게시글 제목")
-    name: str = Field(description="작성자 이름")
-    content: str = Field(description="게시글 본문 내용")
+    title: str = Field(default=None, description="게시글 제목. 사용자가 언급하지 않았다면 본문 내용을 요약하여 생성하세요.")
+    name: str = Field(default="익명", description="작성자 이름. 별도 언급이 없으면 '익명'으로 설정하세요.")
+    content: str = Field(description="게시글 본문 내용 (필수)")
 
 class PostUpdate(BaseModel):
     post_no: int = Field(description="수정할 게시글의 No (Primary Key)")
@@ -31,12 +31,13 @@ class PostDelete(BaseModel):
     post_no: int = Field(description="삭제할 게시글의 No (Primary Key)")
 
 @tool(args_schema=PostCreate)
-def create_board_post(title: str, name: str, content: str):
+def create_board_post(title: str = None, name: str = "익명", content: str = None):
     """
-    사용자의 요청을 바탕으로 새로운 게시글을 데이터베이스에 저장합니다.
-    - title: 추출된 제목 (없을 경우 `content`의 내용 바탕으로 임의로 설정)
-    - name: 작성자 이름 (없을 경우 '익명'으로 설정)
-    - content: 생성되거나 추출된 본문 내용 (**필수**)
+    게시글 작성이 필요할 때 호출합니다. 
+    사용자가 본문 내용만 제공하더라도 이 도구를 사용하여 게시글을 생성하세요.
+    - content: 사용자의 요청 사항이나 본문 메시지
+    - title: 본문 내용을 바탕으로 적절한 제목을 생성하여 입력
+    - name: 이름을 모를 경우 '익명' 사용
     """
     sql = "INSERT INTO list (title, name, content, delYn) VALUES (?, ?, ?, 0)"
     params = (title, name, content)
@@ -107,7 +108,8 @@ async def lifespan(app: FastAPI):
     system_message = (
       f"당신은 게시판 관리 전문 에이전트입니다."
       f"사용자의 요청에 따라 제공된 도구(tools)를 사용하여 게시글을 작성, 수정, 삭제하세요. "
-      f"게시글 작성 시에는 제목(title), 작성자 이름(name), 본문 내용(content)을 포함해야 합니다. "
+      f"사용자의 요청에서 정보가 부족하더라도 최대한 추론하여 도구를 호출하세요. "
+      f"게시글 작성 시에는 제목(title)과 작성자 이름(name)을 사용자가 제공하지 않더라도 본문 내용(content)을 바탕으로 적절히 생성하여 도구를 호출하세요. "
       f"게시글 수정 시에는 게시글 No(post_no)를 필수로 받고, 제목(title)과 본문 내용(content)은 선택적으로 수정할 수 있습니다. "
       f"게시글 삭제 시에는 게시글 No(post_no)를 필수로 받아 해당 게시글을 삭제 처리(delYn=1)하세요. "
     )
