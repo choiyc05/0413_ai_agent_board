@@ -2,8 +2,8 @@ name : test
     
 on:
     push:
-        branches: 
-            - actions_1
+        tags: 
+            - 'v*'
     
 jobs:
     build:
@@ -18,14 +18,21 @@ jobs:
             # - name: Check Node version
             #   run: node -v
 
-            - name: npm install
+            - name: npm install and build
               working-directory: ./frontend
-              run: npm i
+              run: |
+                npm i
+                npm run build
 
-            - name: npm run
-              working-directory: ./frontend
-              run: npm run build
+            # - name: npm run
+            #   working-directory: ./frontend
+            #   run: npm run build
 
-            - name: nginx
-            #   working-directory: ./frontend/dist
-              run: docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html --name frontend nginx:alpine
+            # - name: nginx
+            # #   working-directory: ./frontend/dist
+            #   run: docker run -d -p 80:80 -v ./frontend/dist:/usr/share/nginx/html --name frontend nginx:alpine
+
+            - name: deploy with docker compose
+              run: |
+                docker compose down --remove-orphans
+                docker compose up -d
